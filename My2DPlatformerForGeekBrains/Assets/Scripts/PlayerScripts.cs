@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerScripts : MonoBehaviour
 {
+    [SerializeField] private float hp = 100;
     public float speed = 10;
     public float jumpForce = 5;
     private Rigidbody2D rigidbodyObject;
@@ -37,6 +38,11 @@ public class PlayerScripts : MonoBehaviour
         {
             Shoot();
         }
+    }
+
+    public float GetHP()
+    {
+        return hp;
     }
 
     private void FixedUpdate()
