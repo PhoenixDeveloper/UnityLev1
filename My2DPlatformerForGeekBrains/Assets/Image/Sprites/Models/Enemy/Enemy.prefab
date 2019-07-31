@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8658343244257202973}
   - component: {fileID: 8658343244257202975}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Engine_fire_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8658343244989835216}
   - component: {fileID: 8658343244989835217}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 8658343245372245676}
   - component: {fileID: 8658343245372245675}
   - component: {fileID: 4393761779289494622}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.18216991, y: -0.26706648}
+  m_Offset: {x: -0.7437957, y: -0.26706648}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -239,7 +239,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.9674358, y: 2.3110514}
+  m_Size: {x: 1.8441843, y: 2.3110514}
   m_EdgeRadius: 0
 --- !u!114 &4393761779289494622
 MonoBehaviour:
@@ -263,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8658343245952753672}
   - component: {fileID: 8658343245952753673}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Engine_fire_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
