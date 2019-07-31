@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class BulletEnemyScript : MonoBehaviour
 {
+    GameObject player;
     public float speed = 10;
     public float damage = 5;
-    private SpriteRenderer spritePlayer;
     private bool direction;
 
     private void Start()
     {
-        spritePlayer = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<SpriteRenderer>();
-        direction = spritePlayer.flipX;
+        player = GameObject.FindWithTag("Player");
+        direction = player.transform.position.x - transform.position.x < 0.0f;
     }
 
     void Update()
@@ -24,14 +24,14 @@ public class BulletScript : MonoBehaviour
         else
         {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
-        }        
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<EnemyScripts>().TakeDamage(damage);
+            collision.gameObject.GetComponent<PlayerScripts>().TakeDamage(damage);
         }        
         Destroy(gameObject);
     }

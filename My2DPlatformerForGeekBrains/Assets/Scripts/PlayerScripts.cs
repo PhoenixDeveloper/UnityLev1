@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +10,13 @@ public class PlayerScripts : MonoBehaviour
     public float jumpForce = 5;
     private Rigidbody2D rigidbodyObject;
     private SpriteRenderer sprite;
-    [SerializeField] private GameObject bullet;
+    public GameObject bullet;
     private Transform spawnBulletPoint;
     private Vector3 spawnBulletPointFlipXTrue;
     private Vector3 spawnBulletPointFlipXFalse;
+
+    private DateTime recharge;
+    public float rechargeInMilliseconds = 300;
 
     //находится ли персонаж на земле или в прыжке?
     private bool isGrounded = false;
@@ -34,8 +38,9 @@ public class PlayerScripts : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire1") && ((DateTime.Now - recharge).TotalMilliseconds > rechargeInMilliseconds))
         {
+            recharge = DateTime.Now;
             Shoot();
         }
     }
@@ -47,6 +52,11 @@ public class PlayerScripts : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (hp <= 0)
+        {
+            Destroy(gameObject, 1);
+        }
+
         if (Mathf.Abs(transform.rotation.z) > 0.05f)
         {
             transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0f, transform.rotation.w);
@@ -67,6 +77,11 @@ public class PlayerScripts : MonoBehaviour
             }
         }
         
+    }
+
+    public void TakeDamage(float damage)
+    {
+        hp = hp - damage;
     }
 
     private void Shoot()

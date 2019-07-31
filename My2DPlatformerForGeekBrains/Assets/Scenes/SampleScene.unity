@@ -610,7 +610,7 @@ PrefabInstance:
     - target: {fileID: 8658343245372245674, guid: 183394a0916197649a362f749d20aeed,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.830735
+      value: 12.94
       objectReference: {fileID: 0}
     - target: {fileID: 8658343245372245674, guid: 183394a0916197649a362f749d20aeed,
         type: 3}
@@ -694,7 +694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 8658343245372245673, guid: 183394a0916197649a362f749d20aeed, type: 3}
-  spawnTime: 30
+  spawnTime: 10
   spawnPoints:
   - {fileID: 1263653865}
   - {fileID: 1595432243}
@@ -1586,7 +1586,7 @@ PrefabInstance:
     - target: {fileID: 8658343245372245674, guid: 183394a0916197649a362f749d20aeed,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.36
+      value: 28.6
       objectReference: {fileID: 0}
     - target: {fileID: 8658343245372245674, guid: 183394a0916197649a362f749d20aeed,
         type: 3}
