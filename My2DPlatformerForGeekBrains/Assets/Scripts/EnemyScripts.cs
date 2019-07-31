@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class EnemyScripts : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float hp = 50;
+
+    private void FixedUpdate()
     {
-        
+        if (hp<=0)
+        {
+            Destroy(gameObject, 1);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(float damage)
     {
-        
+        hp = hp - damage;
     }
 }

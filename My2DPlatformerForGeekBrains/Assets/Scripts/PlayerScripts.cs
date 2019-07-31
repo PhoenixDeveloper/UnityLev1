@@ -8,6 +8,10 @@ public class PlayerScripts : MonoBehaviour
     public float jumpForce = 5;
     private Rigidbody2D rigidbodyObject;
     private SpriteRenderer sprite;
+    [SerializeField] private GameObject bullet;
+    private Transform spawnBulletPoint;
+    private Vector3 spawnBulletPointFlipXTrue;
+    private Vector3 spawnBulletPointFlipXFalse;
 
     //находится ли персонаж на земле или в прыжке?
     private bool isGrounded = false;
@@ -22,6 +26,17 @@ public class PlayerScripts : MonoBehaviour
         rigidbodyObject = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         whatIsGround = LayerMask.GetMask("Blocks", "Enemy");
+        spawnBulletPoint = transform.Find("SpawnBulletPoint");
+        spawnBulletPointFlipXFalse = new Vector3(spawnBulletPoint.localPosition.x, spawnBulletPoint.localPosition.y, spawnBulletPoint.localPosition.y);
+        spawnBulletPointFlipXTrue = new Vector3((-1)*spawnBulletPoint.localPosition.x, spawnBulletPoint.localPosition.y, spawnBulletPoint.localPosition.y);
+    }
+
+    private void Update()
+    {
+        if (Input.GetButtonUp("Fire1"))
+        {
+            Shoot();
+        }
     }
 
     private void FixedUpdate()
@@ -48,8 +63,14 @@ public class PlayerScripts : MonoBehaviour
         
     }
 
+    private void Shoot()
+    {
+        var newBullet = GameObject.Instantiate(bullet, spawnBulletPoint.position, Quaternion.identity);
+        Destroy(newBullet, 3);
+    }
+
     private void Move(float move)
-    {       
+    {
         if (move > 0)
         {
             rigidbodyObject.AddForce(transform.right * speed, ForceMode2D.Force);
@@ -61,6 +82,14 @@ public class PlayerScripts : MonoBehaviour
         }
 
         sprite.flipX = move < 0.0F;
+        if (sprite.flipX)
+        {
+            spawnBulletPoint.localPosition = spawnBulletPointFlipXTrue;
+        }
+        else
+        {
+            spawnBulletPoint.localPosition = spawnBulletPointFlipXFalse;
+        }
     }
 
     private void Jump()
