@@ -117,6 +117,6 @@ public class PlayerScripts : MonoBehaviour
 
     public void Die()
     {
-        Destroy(gameObject, 1);
+        Application.LoadLevel(Application.loadedLevel);
     }
 }
