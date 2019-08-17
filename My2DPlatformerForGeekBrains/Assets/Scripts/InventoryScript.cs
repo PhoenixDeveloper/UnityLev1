@@ -7,14 +7,17 @@ using UnityEngine;
 public class InventoryScript : MonoBehaviour
 {
     private int[] items;
+    private int mouseSlot;
     [SerializeField] private int sizeInventory = 5;
-    private Lib library;
+
+    private void Awake()
+    {
+        Lib.Start();
+    }
 
     private void Start()
     {
-        library = GameObject.FindGameObjectWithTag("Library keys").GetComponent<Lib>();
         items = new int[sizeInventory];
-        Debug.Log(items[sizeInventory - 1]);
     }
 
     private void OnGUI()
@@ -23,9 +26,15 @@ public class InventoryScript : MonoBehaviour
         {
             for (int col = 0; col < 5; col++)
             {
-                GUI.Button(new Rect(col * 50+(Screen.width / 2 - 125), row * 50, 50, 50), library.texture[items[col+row*5]]);
+                if (GUI.Button(new Rect(col * 50+(Screen.width / 2 - 125), row * 50, 50, 50), Lib.texture[items[col+row*5]]))
+                {
+                    int loc = items[col + row * 5];
+                    items[col + row * 5] = mouseSlot;
+                    mouseSlot = loc;
+                }
             }
         }
+        GUI.DrawTexture(new Rect(Input.mousePosition.x, Screen.height - Input.mousePosition.y, 50, 50), Lib.texture[mouseSlot]);
     }
 
     /// <summary>
@@ -43,5 +52,18 @@ public class InventoryScript : MonoBehaviour
         {
             Debug.Log("Размер массива должен быть кратным пяти");
         }
+    }
+
+    public void AddItemInIntentory(KeyScript key)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == 0)
+            {
+                items[i] = key.indexKey;
+                return;
+            }
+        }
+        Debug.Log("Нет свободного места");
     }
 }

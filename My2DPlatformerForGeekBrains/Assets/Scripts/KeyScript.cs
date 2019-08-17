@@ -7,21 +7,24 @@ public class KeyScript : MonoBehaviour
 {
 
     [NonSerialized] public SpriteRenderer spriteRenderer;
+    [NonSerialized] public int indexKey;
+    private InventoryScript inventory;
 
-    private void Awake()
+    private void Start()
     {
+        inventory = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<InventoryScript>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        indexKey = Lib.GetCountKeys();
+        Lib.AddKey(this);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-    }
+        if (collision.gameObject.tag == "Player")
+        {
+            inventory.AddItemInIntentory(this);
+            Destroy(gameObject);
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
