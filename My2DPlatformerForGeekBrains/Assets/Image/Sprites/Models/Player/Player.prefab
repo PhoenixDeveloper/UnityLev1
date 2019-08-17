@@ -111,7 +111,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &8836039959087027810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,9 +124,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140dcd18759427141b9f7ce24814b0ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 100
   speed: 6
   jumpForce: 10
   bullet: {fileID: 1184724357648022256, guid: 3858cbb2d93ddc04db47cf39f88d3f2f, type: 3}
+  rechargeInMilliseconds: 300
 --- !u!1 &5025414038435474959
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +195,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1906158369
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 7147553b1e72eec449c5ace4f9f4d13a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

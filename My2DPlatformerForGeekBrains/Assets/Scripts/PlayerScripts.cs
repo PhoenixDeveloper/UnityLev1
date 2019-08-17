@@ -54,14 +54,11 @@ public class PlayerScripts : MonoBehaviour
     {
         if (hp <= 0)
         {
-            Destroy(gameObject, 1);
+            Die();
         }
 
-        if (Mathf.Abs(transform.rotation.z) > 0.05f)
-        {
-            transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0f, transform.rotation.w);
-        }
         isGrounded = Physics2D.OverlapCircle(transform.position, groundRadius, whatIsGround);
+
         if (isGrounded)
         {
             var moveHorizontal = Input.GetAxis("Horizontal");
@@ -116,5 +113,10 @@ public class PlayerScripts : MonoBehaviour
     private void Jump()
     {
         rigidbodyObject.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject, 1);
     }
 }

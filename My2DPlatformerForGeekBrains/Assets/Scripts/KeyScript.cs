@@ -6,8 +6,15 @@ using UnityEngine;
 public class KeyScript : MonoBehaviour
 {
 
+    public enum Door
+    {
+        Blue,
+        Yellow
+    }
+
     [NonSerialized] public SpriteRenderer spriteRenderer;
     [NonSerialized] public int indexKey;
+    public Door openDoor;
     private InventoryScript inventory;
 
     private void Start()

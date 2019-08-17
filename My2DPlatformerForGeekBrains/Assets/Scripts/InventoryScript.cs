@@ -9,9 +9,11 @@ public class InventoryScript : MonoBehaviour
     private int[] items;
     private int mouseSlot;
     [SerializeField] private int sizeInventory = 5;
+    private DoorScript door;
 
     private void Awake()
     {
+        door = GameObject.FindGameObjectWithTag("Door").GetComponent<DoorScript>();
         Lib.Start();
     }
 
@@ -61,6 +63,17 @@ public class InventoryScript : MonoBehaviour
             if (items[i] == 0)
             {
                 items[i] = key.indexKey;
+                switch (key.openDoor)
+                {
+                    case KeyScript.Door.Blue:
+                        door.OpenLeftDoor();
+                        break;
+                    case KeyScript.Door.Yellow:
+                        door.OpenRightDoor();
+                        break;
+                    default:
+                        break;
+                }
                 return;
             }
         }

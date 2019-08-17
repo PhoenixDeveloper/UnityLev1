@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class DoorScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private GameObject leftDoor;
+    private GameObject rightDoor;
+
+    private void Start()
     {
-        
+        leftDoor = transform.GetChild(3).gameObject;
+        rightDoor = transform.GetChild(1).gameObject;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OpenLeftDoor()
     {
-        
+        leftDoor.SetActive(false);
+    }
+
+    public void CloseLeftDoor()
+    {
+        leftDoor.SetActive(true);
+    }
+
+    public void OpenRightDoor()
+    {
+        rightDoor.SetActive(false);
+    }
+
+    public void CloseLRightDoor()
+    {
+        rightDoor.SetActive(true);
     }
 }
