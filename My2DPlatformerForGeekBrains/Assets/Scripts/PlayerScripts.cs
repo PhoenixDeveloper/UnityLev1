@@ -6,12 +6,14 @@ using UnityEngine;
 public class PlayerScripts : MonoBehaviour
 {
     [SerializeField] private float hp = 100;
-    public float speed = 10;
-    public float jumpForce = 5;
+    public float speed = 450;
+    public float maxSpeed = 3;
+    public float jumpForce = 500;
     private Rigidbody2D rigidbodyObject;
     private SpriteRenderer sprite;
     public GameObject bullet;
     private Transform spawnBulletPoint;
+    private Animator animator;
     private Vector3 spawnBulletPointFlipXTrue;
     private Vector3 spawnBulletPointFlipXFalse;
 
@@ -21,7 +23,7 @@ public class PlayerScripts : MonoBehaviour
     //находится ли персонаж на земле или в прыжке?
     private bool isGrounded = false;
     //радиус определения соприкосновения с землей
-    private float groundRadius = 0.5f;
+    private float groundRadius = 1.5f;
     //ссылка на слой, представляющий землю
     private LayerMask whatIsGround;
 
@@ -30,6 +32,7 @@ public class PlayerScripts : MonoBehaviour
     {
         rigidbodyObject = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+        animator = GetComponentInChildren<Animator>();
         whatIsGround = LayerMask.GetMask("Blocks", "Enemy");
         spawnBulletPoint = transform.Find("SpawnBulletPoint");
         spawnBulletPointFlipXFalse = new Vector3(spawnBulletPoint.localPosition.x, spawnBulletPoint.localPosition.y, spawnBulletPoint.localPosition.y);
@@ -65,12 +68,20 @@ public class PlayerScripts : MonoBehaviour
 
             if (moveHorizontal != 0)
             {
+                animator.SetBool("isRun", true);
                 Move(moveHorizontal);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                animator.SetBool("isJump", true);
                 Jump();
+            }
+
+            if (rigidbodyObject.velocity.x == 0 && rigidbodyObject.velocity.y == 0)
+            {
+                animator.SetBool("isJump", false);
+                animator.SetBool("isRun", false);
             }
         }
         
@@ -89,24 +100,27 @@ public class PlayerScripts : MonoBehaviour
 
     private void Move(float move)
     {
-        if (move > 0)
+        if (Mathf.Abs(rigidbodyObject.velocity.x) < maxSpeed)
         {
-            rigidbodyObject.AddForce(transform.right * speed * Time.deltaTime);
-        }
+            if (move > 0)
+            {
+                rigidbodyObject.AddForce(transform.right * speed * Time.deltaTime);
+            }
 
-        if (move < 0)
-        {
-            rigidbodyObject.AddForce(-transform.right * speed * Time.deltaTime);
-        }
+            if (move < 0)
+            {
+                rigidbodyObject.AddForce(-transform.right * speed * Time.deltaTime);
+            }
 
-        sprite.flipX = move < 0.0F;
-        if (sprite.flipX)
-        {
-            spawnBulletPoint.localPosition = spawnBulletPointFlipXTrue;
-        }
-        else
-        {
-            spawnBulletPoint.localPosition = spawnBulletPointFlipXFalse;
+            sprite.flipX = move < 0.0F;
+            if (sprite.flipX)
+            {
+                spawnBulletPoint.localPosition = spawnBulletPointFlipXTrue;
+            }
+            else
+            {
+                spawnBulletPoint.localPosition = spawnBulletPointFlipXFalse;
+            }
         }
     }
 
