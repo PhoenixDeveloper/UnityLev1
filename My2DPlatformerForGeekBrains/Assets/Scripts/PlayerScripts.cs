@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerScripts : MonoBehaviour
 {
@@ -60,6 +61,16 @@ public class PlayerScripts : MonoBehaviour
             Die();
         }
 
+        if (rigidbodyObject.velocity.y == 0)
+        {
+            animator.SetBool("isJump", false);
+        }
+
+        if (rigidbodyObject.velocity.x == 0)
+        {
+            animator.SetBool("isRun", false);
+        }
+
         isGrounded = Physics2D.OverlapCircle(transform.position, groundRadius, whatIsGround);
 
         if (isGrounded)
@@ -76,12 +87,6 @@ public class PlayerScripts : MonoBehaviour
             {
                 animator.SetBool("isJump", true);
                 Jump();
-            }
-
-            if (rigidbodyObject.velocity.x == 0 && rigidbodyObject.velocity.y == 0)
-            {
-                animator.SetBool("isJump", false);
-                animator.SetBool("isRun", false);
             }
         }
         
@@ -131,6 +136,6 @@ public class PlayerScripts : MonoBehaviour
 
     public void Die()
     {
-        Application.LoadLevel(Application.loadedLevel);
+        SceneManager.LoadScene(Application.loadedLevel);
     }
 }

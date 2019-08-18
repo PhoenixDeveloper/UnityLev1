@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinishScript : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class FinishScript : MonoBehaviour
         {
             if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 -100, 200, 200), "Restart")) //Display and use the Yes button
             {
-                Application.LoadLevel(0);
+                SceneManager.LoadScene(0);
                 show = false;
             }
         }
