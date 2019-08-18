@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Door
+  - EndLine
   layers:
   - Default
   - TransparentFX
@@ -42,9 +44,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Key
+    uniqueID: 431208765
+    locked: 0
   - name: Enemy
     uniqueID: 2777375605
     locked: 0
   - name: Player
     uniqueID: 2388808927
+    locked: 0
+  - name: Door
+    uniqueID: 1023371259
+    locked: 0
+  - name: Finish
+    uniqueID: 527466199
     locked: 0

@@ -2,16 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerScripts : MonoBehaviour
 {
     [SerializeField] private float hp = 100;
-    public float speed = 10;
-    public float jumpForce = 5;
+    public float speed = 450;
+    public float maxSpeed = 3;
+    public float jumpForce = 500;
     private Rigidbody2D rigidbodyObject;
     private SpriteRenderer sprite;
     public GameObject bullet;
     private Transform spawnBulletPoint;
+    private Animator animator;
     private Vector3 spawnBulletPointFlipXTrue;
     private Vector3 spawnBulletPointFlipXFalse;
 
@@ -21,7 +24,7 @@ public class PlayerScripts : MonoBehaviour
     //находится ли персонаж на земле или в прыжке?
     private bool isGrounded = false;
     //радиус определения соприкосновения с землей
-    private float groundRadius = 0.5f;
+    private float groundRadius = 1.5f;
     //ссылка на слой, представляющий землю
     private LayerMask whatIsGround;
 
@@ -30,6 +33,7 @@ public class PlayerScripts : MonoBehaviour
     {
         rigidbodyObject = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+        animator = GetComponentInChildren<Animator>();
         whatIsGround = LayerMask.GetMask("Blocks", "Enemy");
         spawnBulletPoint = transform.Find("SpawnBulletPoint");
         spawnBulletPointFlipXFalse = new Vector3(spawnBulletPoint.localPosition.x, spawnBulletPoint.localPosition.y, spawnBulletPoint.localPosition.y);
@@ -54,25 +58,34 @@ public class PlayerScripts : MonoBehaviour
     {
         if (hp <= 0)
         {
-            Destroy(gameObject, 1);
+            Die();
         }
 
-        if (Mathf.Abs(transform.rotation.z) > 0.05f)
+        if (rigidbodyObject.velocity.y == 0)
         {
-            transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0f, transform.rotation.w);
+            animator.SetBool("isJump", false);
         }
+
+        if (rigidbodyObject.velocity.x == 0)
+        {
+            animator.SetBool("isRun", false);
+        }
+
         isGrounded = Physics2D.OverlapCircle(transform.position, groundRadius, whatIsGround);
+
         if (isGrounded)
         {
             var moveHorizontal = Input.GetAxis("Horizontal");
 
             if (moveHorizontal != 0)
             {
+                animator.SetBool("isRun", true);
                 Move(moveHorizontal);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                animator.SetBool("isJump", true);
                 Jump();
             }
         }
@@ -92,29 +105,37 @@ public class PlayerScripts : MonoBehaviour
 
     private void Move(float move)
     {
-        if (move > 0)
+        if (Mathf.Abs(rigidbodyObject.velocity.x) < maxSpeed)
         {
-            rigidbodyObject.AddForce(transform.right * speed, ForceMode2D.Force);
-        }
+            if (move > 0)
+            {
+                rigidbodyObject.AddForce(transform.right * speed * Time.deltaTime);
+            }
 
-        if (move < 0)
-        {
-            rigidbodyObject.AddForce(-transform.right * speed, ForceMode2D.Force);
-        }
+            if (move < 0)
+            {
+                rigidbodyObject.AddForce(-transform.right * speed * Time.deltaTime);
+            }
 
-        sprite.flipX = move < 0.0F;
-        if (sprite.flipX)
-        {
-            spawnBulletPoint.localPosition = spawnBulletPointFlipXTrue;
-        }
-        else
-        {
-            spawnBulletPoint.localPosition = spawnBulletPointFlipXFalse;
+            sprite.flipX = move < 0.0F;
+            if (sprite.flipX)
+            {
+                spawnBulletPoint.localPosition = spawnBulletPointFlipXTrue;
+            }
+            else
+            {
+                spawnBulletPoint.localPosition = spawnBulletPointFlipXFalse;
+            }
         }
     }
 
     private void Jump()
     {
-        rigidbodyObject.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        rigidbodyObject.AddForce(transform.up * jumpForce * Time.deltaTime, ForceMode2D.Impulse);
+    }
+
+    public void Die()
+    {
+        SceneManager.LoadScene(Application.loadedLevel);
     }
 }

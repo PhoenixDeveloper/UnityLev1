@@ -34,7 +34,7 @@ public class EnemyScripts : MonoBehaviour
     {
         float direction = player.transform.position.x - transform.position.x;
 
-        if (Mathf.Abs(direction) < 12 && Mathf.Abs(direction) > 6)
+        if (Mathf.Abs(direction) < 9 && Mathf.Abs(direction) > 5)
         {
             Vector3 pos = transform.position;
             pos.x += Mathf.Sign(direction) * speedMove * Time.deltaTime;
@@ -69,11 +69,6 @@ public class EnemyScripts : MonoBehaviour
         if (hp<=0)
         {
             Destroy(gameObject, 1);
-        }
-
-        if (Mathf.Abs(transform.rotation.z) > 0.05f)
-        {
-            transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0f, transform.rotation.w);
         }
     }
 
