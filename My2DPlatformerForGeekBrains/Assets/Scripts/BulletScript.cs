@@ -7,24 +7,26 @@ public class BulletScript : MonoBehaviour
     public float speed = 10;
     public float damage = 5;
     private SpriteRenderer spritePlayer;
+    new private Rigidbody2D rigidbody2D;
     private bool direction;
 
     private void Start()
     {
+        rigidbody2D = GetComponent<Rigidbody2D>();
         spritePlayer = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<SpriteRenderer>();
         direction = spritePlayer.flipX;
-    }
-
-    void Update()
-    {
         if (direction)
         {
-            transform.Translate(Vector3.left * speed * Time.deltaTime);
+            rigidbody2D.AddForce(Vector2.left * speed);
         }
         else
         {
-            transform.Translate(Vector3.right * speed * Time.deltaTime);
-        }        
+            rigidbody2D.AddForce(Vector2.right * speed);
+        }
+    }
+
+    void Update()
+    {     
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

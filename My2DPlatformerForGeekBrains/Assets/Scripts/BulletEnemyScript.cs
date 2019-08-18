@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletEnemyScript : MonoBehaviour
 {
     GameObject player;
+    new private Rigidbody2D rigidbody2D;
     public float speed = 10;
     public float damage = 5;
     private bool direction;
@@ -12,19 +13,20 @@ public class BulletEnemyScript : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
+        rigidbody2D = GetComponent<Rigidbody2D>();
         direction = player.transform.position.x - transform.position.x < 0.0f;
+        if (direction)
+        {
+            rigidbody2D.AddForce(Vector2.left * speed);
+        }
+        else
+        {
+            rigidbody2D.AddForce(Vector2.right * speed);
+        }
     }
 
     void Update()
     {
-        if (direction)
-        {
-            transform.Translate(Vector3.left * speed * Time.deltaTime);
-        }
-        else
-        {
-            transform.Translate(Vector3.right * speed * Time.deltaTime);
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

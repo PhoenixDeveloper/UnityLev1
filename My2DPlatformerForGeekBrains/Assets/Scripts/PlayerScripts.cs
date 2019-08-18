@@ -91,12 +91,12 @@ public class PlayerScripts : MonoBehaviour
     {
         if (move > 0)
         {
-            rigidbodyObject.AddForce(transform.right * speed, ForceMode2D.Force);
+            rigidbodyObject.AddForce(transform.right * speed * Time.deltaTime);
         }
 
         if (move < 0)
         {
-            rigidbodyObject.AddForce(-transform.right * speed, ForceMode2D.Force);
+            rigidbodyObject.AddForce(-transform.right * speed * Time.deltaTime);
         }
 
         sprite.flipX = move < 0.0F;
@@ -112,7 +112,7 @@ public class PlayerScripts : MonoBehaviour
 
     private void Jump()
     {
-        rigidbodyObject.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        rigidbodyObject.AddForce(transform.up * jumpForce * Time.deltaTime, ForceMode2D.Impulse);
     }
 
     public void Die()
